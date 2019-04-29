@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::Overlay *ui;
+    uint16_t counter = 0;
+
+private slots:
+    void PressF();
+    void HoldShift(bool shift);
 };
 
 #endif // OVERLAY_H
