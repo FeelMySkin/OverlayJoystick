@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <qt_windows.h>
+#include <QTouchEvent>
 
 namespace Ui {
 class Overlay;
@@ -20,6 +21,7 @@ private:
     Ui::Overlay *ui;
     uint16_t counter = 0;
     LPINPUT kb_input;
+    bool event(QEvent *event);
 
 private slots:
     void PressF();

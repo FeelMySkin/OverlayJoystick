@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    overlay.cpp
+    overlay.cpp \
+    touchbutton.cpp
 
 HEADERS += \
         mainwindow.h \
-    overlay.h
+    overlay.h \
+    touchbutton.h
 
 FORMS += \
         mainwindow.ui \

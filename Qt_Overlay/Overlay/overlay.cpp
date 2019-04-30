@@ -4,6 +4,7 @@
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QPushButton>
+#include <QTouchEvent>
 
 Overlay::Overlay(QWidget *parent) :
     QWidget(parent),
@@ -13,6 +14,8 @@ Overlay::Overlay(QWidget *parent) :
     setWindowOpacity(9.0);
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_ShowWithoutActivating);
+    setAttribute(Qt::WA_AcceptTouchEvents);
+    ui->Right->setAttribute(Qt::WA_AcceptTouchEvents);
     setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus | Qt::Tool | Qt::CustomizeWindowHint);
     this->setGeometry(0,0,QGuiApplication::primaryScreen()->geometry().width(),QGuiApplication::primaryScreen()->geometry().height());
     HWND winHandle = (HWND)winId();
@@ -24,6 +27,7 @@ Overlay::Overlay(QWidget *parent) :
     connect(ui->Right,SIGNAL(released()),this,SLOT(PressF()));
     connect(ui->checkBox,SIGNAL(clicked(bool)),this,SLOT(HoldShift(bool)));
 
+    ungrabGesture(Qt::GestureType::TapAndHoldGesture);
     kb_input = new INPUT();
     kb_input->type = INPUT_KEYBOARD;
     kb_input->ki.wScan = 0;
@@ -70,4 +74,31 @@ void Overlay::HoldShift(bool shift)
 Overlay::~Overlay()
 {
     delete ui;
+}
+
+bool Overlay::event(QEvent *event)
+{
+    switch(event->type())
+    {
+        case QEvent::TouchBegin:
+        case QEvent::TouchUpdate:
+        case QEvent::TouchEnd:
+        {
+            QTouchEvent *tch = static_cast<QTouchEvent*>(event);
+            QList<QTouchEvent::TouchPoint> points;
+            event->accept();
+            return true;
+            break;
+        }
+
+        case QEvent::Gesture:
+        {
+            event->accept();
+            return true;
+        }
+
+        default:
+            return QWidget::event(event);
+        break;
+    }
 }

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWidget>
 
-class TouchButton
+class TouchButton : QWidget
 {
 public:
     TouchButton();
