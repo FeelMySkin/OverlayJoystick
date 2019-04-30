@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>852</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="Up">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>50</y>
-     <width>93</width>
-     <height>28</height>
+     <x>220</x>
+     <y>160</y>
+     <width>141</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
@@ -45,14 +45,53 @@
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>100</y>
+     <x>50</x>
+     <y>120</y>
      <width>70</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string>Shift</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Down">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>310</y>
+     <width>141</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Right">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>240</y>
+     <width>141</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Left">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>240</y>
+     <width>141</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
    </property>
   </widget>
  </widget>

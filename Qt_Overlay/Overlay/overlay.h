@@ -2,6 +2,7 @@
 #define OVERLAY_H
 
 #include <QWidget>
+#include <qt_windows.h>
 
 namespace Ui {
 class Overlay;
@@ -18,6 +19,7 @@ public:
 private:
     Ui::Overlay *ui;
     uint16_t counter = 0;
+    LPINPUT kb_input;
 
 private slots:
     void PressF();
