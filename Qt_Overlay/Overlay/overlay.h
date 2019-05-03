@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <qt_windows.h>
 #include <QTouchEvent>
+#include "touchbutton.h"
 
 namespace Ui {
 class Overlay;
@@ -21,10 +22,11 @@ private:
     Ui::Overlay *ui;
     uint16_t counter = 0;
     LPINPUT kb_input;
-    bool event(QEvent *event);
+    TouchButton *btn;
 
 private slots:
     void PressF();
+    void GetSensorData(QPointF point, QTouchEvent *evt);
     void HoldShift(bool shift);
 };
 

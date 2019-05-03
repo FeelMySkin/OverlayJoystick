@@ -5,6 +5,8 @@
 #include <QScreen>
 #include <QPushButton>
 #include <QTouchEvent>
+#include "touchbutton.h"
+#include <qt_windows.h>
 
 Overlay::Overlay(QWidget *parent) :
     QWidget(parent),
@@ -21,11 +23,21 @@ Overlay::Overlay(QWidget *parent) :
     HWND winHandle = (HWND)winId();
     SetWindowLongA(winHandle, GWL_EXSTYLE, GetWindowLongA(winHandle, GWL_EXSTYLE) | WS_EX_NOACTIVATE | WS_EX_APPWINDOW);
 
+    ATOM atomID = 0;
+    LPCSTR tabletAtom = "MicrosoftTabletPenServiceProperty";
+    atomID = GlobalAddAtomA(tabletAtom);
+    SetPropA(winHandle,"MicrosoftTabletPenServiceProperty",reinterpret_cast<HANDLE>(0x01));
+    GlobalDeleteAtom(atomID);
+
     connect(ui->Left,SIGNAL(pressed()),this,SLOT(PressF()));
     connect(ui->Right,SIGNAL(pressed()),this,SLOT(PressF()));
     connect(ui->Left,SIGNAL(released()),this,SLOT(PressF()));
     connect(ui->Right,SIGNAL(released()),this,SLOT(PressF()));
     connect(ui->checkBox,SIGNAL(clicked(bool)),this,SLOT(HoldShift(bool)));
+
+    btn = new TouchButton(this);
+    btn->setGeometry(500,500,200,200);
+    connect(btn,SIGNAL(ReturnPosition(QPointF,QTouchEvent*)), this, SLOT(GetSensorData(QPointF,QTouchEvent*)));
 
     ungrabGesture(Qt::GestureType::TapAndHoldGesture);
     kb_input = new INPUT();
@@ -56,6 +68,11 @@ void Overlay::PressF()
     SendInput(1,kb_input,sizeof(INPUT));
 }
 
+void Overlay::GetSensorData(QPointF point, QTouchEvent* evt)
+{
+    ui->label->setText(QVariant(point.x()).toString() + "," + QVariant(point.y()).toString() + ", " + QVariant(evt->type()).toString());
+}
+
 void Overlay::HoldShift(bool shift)
 {
 
@@ -74,31 +91,4 @@ void Overlay::HoldShift(bool shift)
 Overlay::~Overlay()
 {
     delete ui;
-}
-
-bool Overlay::event(QEvent *event)
-{
-    switch(event->type())
-    {
-        case QEvent::TouchBegin:
-        case QEvent::TouchUpdate:
-        case QEvent::TouchEnd:
-        {
-            QTouchEvent *tch = static_cast<QTouchEvent*>(event);
-            QList<QTouchEvent::TouchPoint> points;
-            event->accept();
-            return true;
-            break;
-        }
-
-        case QEvent::Gesture:
-        {
-            event->accept();
-            return true;
-        }
-
-        default:
-            return QWidget::event(event);
-        break;
-    }
 }
