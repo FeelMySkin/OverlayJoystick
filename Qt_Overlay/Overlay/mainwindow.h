@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "overlay.h"
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,7 @@ public:
 private:
     Ui::MainWindow *ui;
     Overlay ovr;
+    QSystemTrayIcon *tray;
 
 private slots:
     void ShowOverlay(bool);

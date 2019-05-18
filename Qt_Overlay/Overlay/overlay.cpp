@@ -39,6 +39,10 @@ Overlay::Overlay(QWidget *parent) :
     btn->setGeometry(500,500,200,200);
     connect(btn,SIGNAL(ReturnPosition(QPointF,QTouchEvent*)), this, SLOT(GetSensorData(QPointF,QTouchEvent*)));
 
+    TouchButton *btn2 = new TouchButton(this);
+    btn2->setGeometry(width()-500, height()-500,200,200);
+    connect(btn2,SIGNAL(ReturnPosition(QPointF,QTouchEvent*)),this,SLOT(GetSensorData(QPointF,QTouchEvent*)));
+
     ungrabGesture(Qt::GestureType::TapAndHoldGesture);
     kb_input = new INPUT();
     kb_input->type = INPUT_KEYBOARD;
@@ -70,7 +74,11 @@ void Overlay::PressF()
 
 void Overlay::GetSensorData(QPointF point, QTouchEvent* evt)
 {
-    ui->label->setText(QVariant(point.x()).toString() + "," + QVariant(point.y()).toString() + ", " + QVariant(evt->type()).toString());
+    TouchButton *curr_btn = (TouchButton*)sender();
+    QString btn_type;// = "btn1";
+    if(curr_btn == btn)btn_type = "btn1";
+    else btn_type = "btn2";
+    ui->label->setText(QVariant(point.x()).toString() + "," + QVariant(point.y()).toString() + ", " + QVariant(evt->type()).toString() + btn_type);
 }
 
 void Overlay::HoldShift(bool shift)
