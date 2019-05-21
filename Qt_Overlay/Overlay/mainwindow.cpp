@@ -14,11 +14,14 @@ MainWindow::MainWindow(QWidget *parent) :
     tray->setIcon(this->style()->standardIcon(QStyle::SP_ComputerIcon));
 
     QMenu * menu = new QMenu(this);
+
     QAction *overlay_start = new QAction("Start Overlay",this);
+    overlay_start->setCheckable(true);
     QAction *exit_prog = new QAction("Exti",this);
+    overlay_start->
 
     connect(ui->checkBox,SIGNAL(clicked(bool)),this,SLOT(ShowOverlay(bool)));
-    connect(overlay_start,SIGNAL(triggered()),this,SLOT(ShowOverlay(true)));
+    connect(overlay_start,SIGNAL(triggered(bool)),this,SLOT(ShowOverlay(bool)));
     connect(exit_prog,SIGNAL(triggered()),this,SLOT(close()));
 
     menu->addAction(overlay_start);
