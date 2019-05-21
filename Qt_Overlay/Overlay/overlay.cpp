@@ -7,6 +7,7 @@
 #include <QTouchEvent>
 #include "touchbutton.h"
 #include <qt_windows.h>
+#include <QTimer>
 
 Overlay::Overlay(QWidget *parent) :
     QWidget(parent),
@@ -21,7 +22,9 @@ Overlay::Overlay(QWidget *parent) :
     setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus | Qt::Tool | Qt::CustomizeWindowHint);
     this->setGeometry(0,0,QGuiApplication::primaryScreen()->geometry().width(),QGuiApplication::primaryScreen()->geometry().height());
     HWND winHandle = (HWND)winId();
+    //SetForegroundWindow(winHandle);
     SetWindowLongA(winHandle, GWL_EXSTYLE, GetWindowLongA(winHandle, GWL_EXSTYLE) | WS_EX_NOACTIVATE | WS_EX_APPWINDOW);
+    //SetWindowPos(winHandle,((HWND)-1),0,0,QGuiApplication::primaryScreen()->geometry().width(),QGuiApplication::primaryScreen()->geometry().height(),SWP_NOMOVE | SWP_NOSIZE);
 
     ATOM atomID = 0;
     LPCSTR tabletAtom = "MicrosoftTabletPenServiceProperty";
@@ -50,6 +53,7 @@ Overlay::Overlay(QWidget *parent) :
     kb_input->ki.time = 0;
     kb_input->ki.dwExtraInfo = 0;
     kb_input->ki.wScan = 0x4B;
+    QTimer timer;
 }
 
 void Overlay::PressF()
