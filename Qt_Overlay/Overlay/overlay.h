@@ -28,6 +28,7 @@ private slots:
     void PressF();
     void GetSensorData(QPointF point, QTouchEvent *evt);
     void HoldShift(bool shift);
+    void BringToTop();
 };
 
 #endif // OVERLAY_H

@@ -54,6 +54,9 @@ Overlay::Overlay(QWidget *parent) :
     kb_input->ki.dwExtraInfo = 0;
     kb_input->ki.wScan = 0x4B;
     QTimer timer;
+    connect(&timer,SIGNAL(timeout()),this,SLOT(BringToTop()));
+    timer.setInterval(1000);
+    timer.start();
 }
 
 void Overlay::PressF()
